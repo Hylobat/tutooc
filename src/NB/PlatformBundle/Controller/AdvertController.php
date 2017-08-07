@@ -17,6 +17,10 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class AdvertController extends Controller
 {
+    public function homeAction(Request $request)
+    {
+        return $this->redirectToRoute('nb_platform_home');
+    }
     public function indexAction($page, Request $request)
     {
 

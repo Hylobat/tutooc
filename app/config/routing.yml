@@ -1,3 +1,8 @@
+nb_plat:
+    path:      /
+    defaults:
+        _controller: NBPlatformBundle:Advert:home
+
 nb_platform:
     resource: "@NBPlatformBundle/Resources/config/routing.yml"
     prefix:   /{_locale}
