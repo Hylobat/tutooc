@@ -1,0 +1,34 @@
+services:
+#    nb_platform.example:
+#        class: NB\PlatformBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    nb_platform.antispam:
+        class: NB\PlatformBundle\Antispam\NBAntispam
+        arguments:
+            - "@mailer"
+            - 50
+        calls:
+            - [ setLocale, [%locale%] ]
+
+    nb_platform.twig.antispam_extension:
+        class: NB\PlatformBundle\Twig\AntispamExtension
+        arguments:
+            - "@nb_platform.antispam"
+        tags:
+            -  { name: twig.extension }
+
+    nb_platform.form.ckeditor:
+        class: NB\PlatformBundle\Form\CkeditorType
+        tags:
+            - { name: form.type, alias: ckeditor }
+
+    nb_platform.beta.html_adder:
+        class: NB\PlatformBundle\Beta\BetaHTMLAdder
+
+    nb_platform.beta.listener:
+        class: NB\PlatformBundle\Beta\BetaListener
+        arguments:
+            - "@nb_platform.beta.html_adder"
+            - "2017-10-01"
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: processBeta }

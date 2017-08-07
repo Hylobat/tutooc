@@ -1,0 +1,41 @@
+{# src/OC/PlatformBundle/Resources/views/Advert/edit.html.twig #}
+
+{% extends "NBPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+    Modifier une annonce - {{ parent() }}
+{% endblock %}
+
+{% block nbplatform_body %}
+
+    <h2>Modifier une annonce</h2>
+
+    {{ include("NBPlatformBundle:Advert:form.html.twig") }}
+
+    <p>
+        Vous éditez une annonce déjà existante, merci de ne pas changer
+        l'esprit général de l'annonce déjà publiée.
+    </p>
+    {% if not advert.categories.empty %}
+
+        <p>
+
+            Cette annonce est parue dans les catégories suivantes :
+
+            {% for category in advert.categories %}
+
+                {{ category.name }}{% if not loop.last %}, {% endif %}
+
+            {% endfor %}
+
+        </p>
+
+    {% endif %}
+    <p>
+        <a href="{{ path('nb_platform_view', {'id': advert.id}) }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+            Retour à l'annonce
+        </a>
+    </p>
+
+{% endblock %}

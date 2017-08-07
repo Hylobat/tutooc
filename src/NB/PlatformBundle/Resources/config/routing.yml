@@ -1,0 +1,34 @@
+
+nb_platform_home:
+    path:      /{page}
+    defaults:
+        _controller: NBPlatformBundle:Advert:index
+        page:        1
+    requirements:
+        page: \d*
+
+nb_platform_view:
+    path:     /advert/{id}
+    defaults:
+        _controller: NBPlatformBundle:Advert:view
+    requirements:
+        id: \d+
+
+nb_platform_add:
+    path:      /add
+    defaults:
+        _controller: NBPlatformBundle:Advert:add
+
+nb_platform_edit:
+    path:      /edit/{id}
+    defaults:
+        _controller: NBPlatformBundle:Advert:edit
+    requirements:
+        id: \d+
+
+nb_platform_delete:
+    path:      /delete/{id}
+    defaults:
+        _controller: NBPlatformBundle:Advert:delete
+    requirements:
+        id: \d+

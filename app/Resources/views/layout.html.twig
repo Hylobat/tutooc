@@ -1,0 +1,80 @@
+{# app/Resources/views/layout.html.twig #}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}NB Plateforme{% endblock %}</title>
+
+    {% block stylesheets %}
+        {# On charge le CSS de bootstrap depuis le site directement #}
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    {% endblock %}
+</head>
+
+<body>
+<div class="container">
+    <div id="header" class="jumbotron">
+        <h1>Ma plateforme d'annonces</h1>
+        <p class="text-right">
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    Connecté en tant que {{ app.user.username }}
+                    -
+                    <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+                {% else %}
+                    <a href="{{ path('fos_user_security_login') }}">Connexion</a>
+                    -
+                    <a href="{{ path('fos_user_registration_register') }}">Créer un compte</a>
+
+                {% endif %}
+        </p>
+    </div>
+    {# On affiche tous les messages flash dont le nom est « info » #}
+    {% if  app.session.flashbag.peekAll|length %}
+    <div class="row">
+        <div class="col-md-12">
+    {% for type, messages in app.session.flashbag.all %}
+        {% for message in messages %}
+            <p class="bg-{{ type ? type : '' }}" style="padding:15px;">
+                {{ message|trans({}, domain|default('messages')) }}
+            </p>
+        {% endfor %}
+    {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    <div class="row">
+        <div id="menu" class="col-md-3">
+            <h3>Les annonces</h3>
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="{{ path('nb_platform_home') }}">Accueil</a></li>
+                <li><a href="{{ path('nb_platform_add') }}">Ajouter une annonce</a></li>
+            </ul>
+
+            <h4>Dernières annonces</h4>
+            {{ render(controller("NBPlatformBundle:Advert:menu", {'limit': 3})) }}
+        </div>
+        <div id="content" class="col-md-9">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </div>
+
+    <hr>
+
+    <footer>
+        <p>The sky's the limit © {{ 'now'|date('Y') }} and beyond.</p>
+        <p>Aujourd'hui nous sommes le {{ 'now'|localizeddate('full', 'none') }} et il est {{ 'now'|localizeddate('none', 'short') }}</p>
+    </footer>
+</div>
+
+{% block javascripts %}
+    {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+{% endblock %}
+
+</body>
+</html>
