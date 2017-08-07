@@ -36,7 +36,7 @@ class AdvertController extends Controller
 
         $nbPages = ceil(count($listAdverts) / $nbPerPage);
 
-        if($page > $nbPages){
+        if($page > $nbPages && $nbPages > 0 ){
             return $this->redirectToRoute('nb_platform_home', array('page' => $nbPages));
         }
         return $this->render('NBPlatformBundle:Advert:index.html.twig', array(

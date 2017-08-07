@@ -22,7 +22,7 @@
             <li>Pas (encore !) d'annonces</li>
         {% endfor %}
     </ul>
-
+    {% if nbPages > 0 %}
     <ul class="pagination">
 
         {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
@@ -38,5 +38,5 @@
         {% endfor %}
 
     </ul>
-
+    {% endif %}
 {% endblock %}
